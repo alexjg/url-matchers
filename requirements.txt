@@ -1,1 +1,2 @@
 PyHamcrest==1.8.0
+six==1.7.3

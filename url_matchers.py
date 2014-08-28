@@ -1,6 +1,6 @@
 from hamcrest.core.base_matcher import BaseMatcher
 from hamcrest.core.helpers.hasmethod import hasmethod
-import urllib.parse as urlparse
+from six.moves.urllib import parse as urlparse
 
 class UrlMatcher(BaseMatcher):
 

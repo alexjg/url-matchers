@@ -7,6 +7,6 @@ reqs = [str(ir.req) for ir in install_reqs]
 setup(
     name='url-matchers',
     version='0.0.1',
-    packages=['url_matchers'],
+    modules=['url_matchers'],
     install_requires=reqs,
 )
