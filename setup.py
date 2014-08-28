@@ -8,6 +8,7 @@ reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
     name='url-matchers',
+    description="Url matchers for PyHamcrest",
     version='0.0.1',
     modules=['url_matchers'],
     install_requires=reqs,
