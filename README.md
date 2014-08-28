@@ -2,6 +2,11 @@
 
 This is a set of url matchers for PyHamcrest, example usage below
 
+##Installation
+`pip install url-matchers`
+
+##Usage
+
 ```
 from hamcrest import assert_that
 from url_matchers import has_scheme, has_netloc, \
