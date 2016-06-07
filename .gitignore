@@ -1,2 +1,3 @@
 *.pyc
 url_matchers.egg-info/
+dist/
