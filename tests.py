@@ -1,6 +1,7 @@
 import unittest
-from hamcrest import assert_that, is_not
+from hamcrest import assert_that, is_not, all_of, contains_string
 from url_matchers import has_scheme, has_netloc, has_path, has_query_args, has_exactly_query_args
+from six.moves.urllib import parse as urlparse
 
 class HasSchemeTestCase(unittest.TestCase):
 
@@ -61,6 +62,21 @@ class HasQueryArgsMatcherTestCase(unittest.TestCase):
         assert_that(url, has_query_args({
             "arg1": ["val1"],
         }))
+
+    def test_error_description_is_useful(self):
+        with self.assertRaises(AssertionError) as cm:
+            assert_that(
+                "http://google.com/?" + urlparse.urlencode({"some[val]": "some"}),
+                has_query_args({"some": "thing"})
+            )
+        assert_that(
+            str(cm.exception.args[0]),
+            all_of(
+                contains_string("Expected: a url with query: {'some': 'thing'}"),
+                contains_string("but: 'http://google.com/?some%5Bval%5D=some' (query dict {'some[val]': ['some']})"),
+            )
+        )
+
 
 
 class HasExactlyQueryArgsTestCase(unittest.TestCase):

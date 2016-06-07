@@ -45,6 +45,20 @@ class HasQueryArgsMatcher(UrlMatcher):
             return qs_args == self.expected
         return all(item in qs_args.items() for item in self.expected.items())
 
+    def describe_to(self, description):
+        description.append_text("a url with {0}: {1}".format(
+            self.component_name,
+            self.expected,
+        ))
+        return description
+
+    def describe_mismatch(self, item, mismatch_description):
+        pr = urlparse.urlparse(item)
+        but_desc = "'{0}' (query dict {1})".format(
+            item, urlparse.parse_qs(urlparse.unquote(pr.query)),
+        )
+        mismatch_description.append_text(but_desc)
+
 
 def has_query_args(query_args):
     return HasQueryArgsMatcher(query_args)

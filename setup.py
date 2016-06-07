@@ -5,7 +5,7 @@ from pip.req import parse_requirements
 setup(
     name='url-matchers',
     description="Url matchers for PyHamcrest",
-    version='0.0.4',
+    version='0.0.5',
     py_modules=['url_matchers'],
     install_requires = [
         "PyHamcrest>=1.8.0",
