@@ -12,6 +12,7 @@ class HasSchemeTestCase(unittest.TestCase):
         url = "https://google.com"
         assert_that(url, is_not(has_scheme("http")))
 
+
 class HasNetLocTestCase(unittest.TestCase):
 
     def test_true_if_has_netloc(self):
@@ -21,6 +22,7 @@ class HasNetLocTestCase(unittest.TestCase):
     def test_false_if_does_not_have_schme(self):
         url = "https://google2.com"
         assert_that(url, is_not(has_netloc("google.com")))
+
 
 class HasPathMatcherTestCase(unittest.TestCase):
 
@@ -32,6 +34,7 @@ class HasPathMatcherTestCase(unittest.TestCase):
         url = "https://google.com/some/other/path"
         assert_that(url, is_not(has_path("/some/path")))
 
+
 class HasQueryArgsMatcherTestCase(unittest.TestCase):
 
     def test_true_if_has_query_args(self):
@@ -39,6 +42,12 @@ class HasQueryArgsMatcherTestCase(unittest.TestCase):
         assert_that(url, has_query_args({
             "arg1": ["val1"],
             "arg2": ["val2"],
+        }))
+
+    def test_true_if_args_are_urlencoded(self):
+        url = "https://somewhere/?arg1%5Bsub%5D=val"
+        assert_that(url, has_query_args({
+            "arg1[sub]": ["val"],
         }))
 
     def test_not_true_if_doesnt_have_query_args(self):
@@ -52,6 +61,7 @@ class HasQueryArgsMatcherTestCase(unittest.TestCase):
         assert_that(url, has_query_args({
             "arg1": ["val1"],
         }))
+
 
 class HasExactlyQueryArgsTestCase(unittest.TestCase):
 

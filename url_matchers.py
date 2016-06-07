@@ -40,7 +40,7 @@ class HasQueryArgsMatcher(UrlMatcher):
         self.exact_match = exact_match
 
     def _matches_parse_result(self, parse_result):
-        qs_args = urlparse.parse_qs(parse_result.query)
+        qs_args = urlparse.parse_qs(urlparse.unquote(parse_result.query))
         if self.exact_match:
             return qs_args == self.expected
         return all(item in qs_args.items() for item in self.expected.items())
