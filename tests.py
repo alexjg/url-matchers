@@ -81,6 +81,14 @@ class HasQueryArgsMatcherTestCase(unittest.TestCase):
         with self.assertRaises(AssertionError):
             assert_that(None, has_query_args({"some": ["arg"]}))
 
+    def test_error_description_when_none(self):
+        with self.assertRaises(AssertionError) as cm:
+            assert_that(None, has_query_args({"some": "thing"}))
+        assert_that(
+            str(cm.exception.args[0]),
+            contains_string("but: was None"),
+        )
+
 
 
 class HasExactlyQueryArgsTestCase(unittest.TestCase):

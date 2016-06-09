@@ -57,7 +57,8 @@ class HasQueryArgsMatcher(UrlMatcher):
 
     def describe_mismatch(self, item, mismatch_description):
         if item == None:
-            return "was None"
+            mismatch_description.append_text("was None")
+            return
         pr = urlparse.urlparse(item)
         but_desc = "was '{0}' (query dict {1})".format(
             item, urlparse.parse_qs(urlparse.unquote(pr.query)),
