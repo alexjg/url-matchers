@@ -40,7 +40,10 @@ class HasQueryArgsMatcher(UrlMatcher):
         self.exact_match = exact_match
 
     def _matches_parse_result(self, parse_result):
-        qs_args = urlparse.parse_qs(urlparse.unquote(parse_result.query))
+        if parse_result.query == b'':
+            qs_args = {}
+        else:
+            qs_args = urlparse.parse_qs(urlparse.unquote(parse_result.query))
         if self.exact_match:
             return qs_args == self.expected
         return all(item in qs_args.items() for item in self.expected.items())
@@ -53,8 +56,10 @@ class HasQueryArgsMatcher(UrlMatcher):
         return description
 
     def describe_mismatch(self, item, mismatch_description):
+        if item == None:
+            return "was None"
         pr = urlparse.urlparse(item)
-        but_desc = "'{0}' (query dict {1})".format(
+        but_desc = "was '{0}' (query dict {1})".format(
             item, urlparse.parse_qs(urlparse.unquote(pr.query)),
         )
         mismatch_description.append_text(but_desc)

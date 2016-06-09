@@ -73,9 +73,13 @@ class HasQueryArgsMatcherTestCase(unittest.TestCase):
             str(cm.exception.args[0]),
             all_of(
                 contains_string("Expected: a url with query: {'some': 'thing'}"),
-                contains_string("but: 'http://google.com/?some%5Bval%5D=some' (query dict {'some[val]': ['some']})"),
+                contains_string("but: was 'http://google.com/?some%5Bval%5D=some' (query dict {'some[val]': ['some']})"),
             )
         )
+
+    def test_works_on_none(self):
+        with self.assertRaises(AssertionError):
+            assert_that(None, has_query_args({"some": ["arg"]}))
 
 
 
